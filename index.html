@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi Video Downloader</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="https://img.icons8.com/ios-filled/50/tiktok.png" />
+</head>
+<body class="bg-gradient-to-br from-black via-gray-800 to-gray-900 text-white min-h-screen overflow-y-auto">
+
+  <div class="flex flex-col items-center justify-center min-h-screen p-6">
+
+    <!-- Logo -->
+    <img src="https://img.icons8.com/ios-filled/100/ffffff/tiktok.png" alt="TikTok Logo" class="mb-4 w-20 h-20" />
+
+    <!-- Judul -->
+    <h1 class="text-3xl font-bold mb-2 text-center">Video Downloader</h1>
+    <p class="text-gray-400 mb-6 text-center">Unduh video dari TikTok, Instagram, YouTube & Facebook tanpa watermark</p>
+
+    <!-- Pilihan Platform -->
+    <div class="flex flex-wrap justify-center gap-3 mb-6">
+      <button onclick="setPlatform('tiktok')" class="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded-lg">TikTok</button>
+      <button onclick="setPlatform('instagram')" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg">Instagram</button>
+      <button onclick="setPlatform('youtube')" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg">YouTube</button>
+      <button onclick="setPlatform('facebook')" class="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg">Facebook</button>
+    </div>
+
+    <!-- Input URL -->
+    <div class="bg-gray-700 p-6 rounded-xl w-full max-w-md text-center">
+      <input id="videoUrl" type="text" placeholder="Tempel link video di sini"
+        class="w-full px-4 py-3 mb-4 text-black rounded-xl focus:outline-none focus:ring focus:ring-blue-400"
+      />
+      <button onclick="redirectToDownloader()"
+        class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl w-full transition">
+        Download Sekarang
+      </button>
+      <div id="error" class="text-red-400 mt-3 hidden">Link tidak valid untuk platform yang dipilih.</div>
+    </div>
+
+    <!-- Section Scrollable Info -->
+    <div class="mt-10 bg-gray-800/60 rounded-xl p-6 w-full max-w-2xl max-h-80 overflow-y-auto">
+      <h2 class="text-xl font-bold text-center mb-4">Kelebihan & Kekurangan</h2>
+      <p class="text-center mb-4">
+        Aplikasi ini memudahkan kamu untuk mengunduh video dari berbagai platform populer seperti TikTok, Instagram, YouTube, dan Facebook dengan cepat dan gratis. Tidak diperlukan login atau registrasi, cukup tempel link dan langsung unduh. Desain antarmuka yang sederhana dan responsif membuat penggunaannya sangat nyaman di perangkat seluler.
+      </p>
+      <p class="text-center mb-4">
+        Meskipun begitu, karena aplikasi ini menggunakan situs pihak ketiga (seperti SnapTik dan SaveIG), maka stabilitas link download tergantung pada layanan eksternal. Jika salah satu situs sedang error atau down, maka proses download akan terhambat. Selain itu, beberapa video yang memiliki privasi tinggi mungkin tidak dapat diunduh.
+      </p>
+      <p class="text-center mb-4">
+        Kami terus melakukan pengembangan untuk menambahkan fitur baru dan meningkatkan kecepatan akses. Di masa depan, kamu akan bisa menyimpan riwayat link, memilih resolusi video, hingga mengonversi ke MP3 secara langsung. Silakan gunakan fitur ini secara bijak dan hormati hak cipta setiap konten yang kamu unduh.
+      </p>
+      <p class="text-center font-semibold text-green-400 mt-6">Terima kasih telah menggunakan layanan ini!</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-10 text-sm text-gray-400 text-center">
+      <p>Hubungi: <a href="mailto:pasaperdiansah@gmail.com" class="underline hover:text-white">pasaperdiansah@gmail.com</a></p>
+      <p class="mt-2">&copy; 2025 Downloader App</p>
+    </footer>
+  </div>
+
+  <script>
+    let platform = "tiktok";
+
+    function setPlatform(name) {
+      platform = name;
+    }
+
+    function redirectToDownloader() {
+      const url = document.getElementById('videoUrl').value.trim();
+      const error = document.getElementById('error');
+      error.classList.add('hidden');
+
+      if (!url || !url.includes('.')) {
+        error.classList.remove('hidden');
+        return;
+      }
+
+      let redirectUrl = "#";
+
+      switch (platform) {
+        case "tiktok":
+          redirectUrl = `https://snaptik.app/ID?url=${encodeURIComponent(url)}`;
+          break;
+        case "instagram":
+          redirectUrl = `https://saveig.app/id?url=${encodeURIComponent(url)}`;
+          break;
+        case "youtube":
+          redirectUrl = `https://en.y2mate.is/youtube-video-downloader?url=${encodeURIComponent(url)}`;
+          break;
+        case "facebook":
+          redirectUrl = `https://fdown.net/?url=${encodeURIComponent(url)}`;
+          break;
+        default:
+          error.classList.remove('hidden');
+          return;
+      }
+
+      window.open(redirectUrl, "_blank");
+    }
+  </script>
+
+</body>
+</html>
